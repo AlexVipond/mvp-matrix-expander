@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Expand Your Matrix</title>
+
+        <meta charset="utf-8">
+        <meta name="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="images/matrix-expander.png">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.css">
+        <link rel="stylesheet" href="main.css">
+
+        <meta name="description" content="Web app that converts adjacency matrices into JSON blueprints for Kumu">
+        <meta name="keywords" content="matrix, element, connection, network, graph, visualization, data massage, Alex Vipond">
+        <meta name="author" content="Alex Vipond">
+    </head>
+
+    <body>
+        <section id="landing-page">
+            <div id="img-cover">
+                <img src="https://i.giphy.com/Q9aBxHn9fTqKs.gif" alt="the matrix">
+            </div>
+
+            <h1>Expand the Matrix</h1>
+
+            <div id="upload-wrapper">
+                <label for="upload-csv">
+                    <input type="file" id="upload-csv" name="upload-csv">
+                    <span id="upload-button" class="button">Upload .csv</span>
+                </label>
+            </div>
+
+            <div id="direction-wrapper">
+                <label for="undirected">
+                    <input type="radio" id="undirected" name="direction" value="undirected">
+                    <span class="button">Undirected</span>
+                </label>
+
+                <label for="directed">
+                    <input type="radio" id="directed" name="direction" value="directed">
+                    <span class="button">Directed</span>
+                </label>
+            </div>
+
+            <div id="submit-wrapper">
+                <button type="submit" id="parse-csv" class="button">Expand the Matrix</button>
+            </div>
+        </section>
+
+        <div id="results-wrapper">
+            <p>Results have been copied to your clipboard.</p>
+            <input type="text" id="copy-text">
+            <code id="results"></code>
+        </div>
+
+
+        <script src="https://cdn.rawgit.com/mholt/PapaParse/master/papaparse.min.js"></script>
+        <script src="matrix-expander.js"></script>
+    </body>
+</html>
