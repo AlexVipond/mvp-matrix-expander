@@ -50,7 +50,7 @@ parseCSV.addEventListener("click", function(event) {
                             }
                         });
 
-                        columns.shift();
+                        columns = columns.slice(1);
                     });
 
                     elements = rows.map((row, i) => {
