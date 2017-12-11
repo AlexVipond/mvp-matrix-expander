@@ -14,6 +14,8 @@ uploadCSV.addEventListener("change", function() {
 parseCSV.addEventListener("click", function(event) {
     if(!uploadCSV.value) {
         alert("Don't forget to upload a file!");
+    } else if(uploadButton.innerHTML.split(".")[1] !== "csv") {
+        alert("Oops - that's not a .csv!");
     } else if(directed.checked === false && undirected.checked === false) {
         alert("Don't forget to choose directed or undirected!");
     } else {
@@ -78,6 +80,9 @@ parseCSV.addEventListener("click", function(event) {
 
                 document.querySelector("#results").innerHTML = JSON.stringify(JSON.parse("{\"elements\":" + JSON.stringify(elements) + ",\"connections\":" + JSON.stringify(connections) + "}"), null, 2);
 
+                console.table(rows);
+                console.table(elements);
+                console.table(connections);
                 // let copyText = document.querySelector("#copy-text");
                 // copyText.value = document.querySelector("#results").innerHTML;
                 // // copyText.focus();
