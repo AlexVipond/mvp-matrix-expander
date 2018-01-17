@@ -3,11 +3,14 @@ let uploadCSV = document.querySelector("#upload-csv"),
     uploadButton = document.querySelector("#upload-button");
     directed = document.querySelector("#directed"),
     undirected = document.querySelector("#undirected"),
-    parseCSV = document.querySelector("#parse-csv");
+    parseCSV = document.querySelector("#parse-csv"),
+    downloadButton = document.querySelector("#download-json");
+
+let resultString, downloadData;
 
 uploadCSV.addEventListener("change", function() {
-    uploadButton.style["background-color"] = "var(--theme)";
-    uploadButton.style.color = "var(--light)";
+    uploadButton.style["background-color"] = "#1ec503";
+    uploadButton.style.color = "#fcfcfa";
     uploadButton.innerHTML = uploadCSV.value.split("\\").reverse()[0];
 });
 
@@ -27,7 +30,7 @@ parseCSV.addEventListener("click", function(event) {
             header: true,
             complete: function(matrix) {
                 parseCSV.style["background-color"] = "#d93e4a";
-                parseCSV.style.color = "var(--light)";
+                parseCSV.style.color = "#fcfcfa";
                 parseCSV.innerHTML = "You have taken the red pill.";
 
                 uploadCSV.disabled = true;
@@ -76,19 +79,19 @@ parseCSV.addEventListener("click", function(event) {
                     });
                 }
 
+                resultString = JSON.stringify(JSON.parse("{\"elements\":" + JSON.stringify(elements) + ",\"connections\":" + JSON.stringify(connections) + "}"), null, 2);
+
                 document.querySelector("#results-wrapper").classList.add("show-results");
 
-                document.querySelector("#results").innerHTML = JSON.stringify(JSON.parse("{\"elements\":" + JSON.stringify(elements) + ",\"connections\":" + JSON.stringify(connections) + "}"), null, 2);
+                document.querySelector("#results").innerHTML = resultString;
+
+                downloadData = "text/json;charset=utf-8," + encodeURIComponent(resultString);
+
+                downloadButton.innerHTML += '<a class="button" href="data:' + downloadData + '" download="' + uploadButton.textContent.replace('.csv','') + '.json">Download JSON</a>';
 
                 console.table(rows);
                 console.table(elements);
                 console.table(connections);
-                // let copyText = document.querySelector("#copy-text");
-                // copyText.value = document.querySelector("#results").innerHTML;
-                // // copyText.focus();
-                // copyText.select();
-                // document.execCommand('selectall');
-                // document.execCommand('Copy');
             }
         });
     }
