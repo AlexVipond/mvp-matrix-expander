@@ -26,7 +26,9 @@ parseCSV.addEventListener("click", function(event) {
 
         let matrix, rows, columns, firstColumn, connections = [], elements;
 
-        Papa.parse(uploadCSV.files[0], {
+        let file = uploadCSV.files[0];
+
+        Papa.parse(file, {
             header: true,
             complete: function(matrix) {
                 parseCSV.style["background-color"] = "#d93e4a";
@@ -38,15 +40,17 @@ parseCSV.addEventListener("click", function(event) {
                 undirected.disabled = true;
                 parseCSV.disabled = true;
 
+                console.log(matrix);
                 rows = matrix.data;
                 columns = matrix.meta.fields.slice(1);
+                console.log(columns);
 
                 if(undirected.checked) {
                     rows.forEach(row => {
                         columns.forEach(column => {
                             if(row[Object.keys(row)[0]] !== column && row[column] > 0) {
                                 connections.push({
-                                    "from": row[Object.keys(row)[0]],
+                                    "from": row[matrix.meta.fields[0]],
                                     "to": column,
                                     "strength": Number(row[column])
                                 });
@@ -57,15 +61,15 @@ parseCSV.addEventListener("click", function(event) {
                     });
 
                     elements = rows.map((row, i) => {
-                        row = {"label": rows[i][Object.keys(rows[i])[0]]}
+                        row = {"label": rows[i][matrix.meta.fields[0]]}
                         return row;
                     });
                 } else if(directed.checked) {
                     rows.forEach(row => {
                         columns.forEach(column => {
-                            if(row[Object.keys(row)[0]] !== column && row[column] > 0) {
+                            if(row[matrix.meta.fields[0]] !== column && row[column] > 0) {
                                 connections.push({
-                                    "from": row[Object.keys(row)[0]],
+                                    "from": row[matrix.meta.fields[0]],
                                     "to": column,
                                     "strength": Number(row[column])
                                 });
@@ -74,7 +78,7 @@ parseCSV.addEventListener("click", function(event) {
                     });
 
                     elements = rows.map((row, i) => {
-                        row = {"label": rows[i][Object.keys(rows[i])[0]]}
+                        row = {"label": rows[i][matrix.meta.fields[0]]}
                         return row;
                     });
                 }
@@ -89,9 +93,9 @@ parseCSV.addEventListener("click", function(event) {
 
                 downloadButton.innerHTML += '<a class="button" href="data:' + downloadData + '" download="' + uploadButton.textContent.replace('.csv','') + '.json">Download JSON</a>';
 
-                console.table(rows);
-                console.table(elements);
-                console.table(connections);
+                // console.table(rows);
+                // console.table(elements);
+                // console.table(connections);
             }
         });
     }
